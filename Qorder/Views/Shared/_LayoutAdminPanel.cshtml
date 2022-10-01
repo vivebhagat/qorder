@@ -1,0 +1,253 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rechord 1.7</title>
+    <link href="~/content/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/content/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="~/content/tabler/css/tabler.min.css"></script>
+    <!--    <link href="~/content/build/css/custom.min.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.20/angular-material.css">
+
+    <style>
+
+        md-select {
+            margin-bottom: 0px !important;
+            margin-top: 0px !important;
+        }
+
+        #loginModal {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            background-color: grey;
+            opacity: 0.8;
+        }
+
+        #processing {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            background-color: grey;
+            opacity: 0.4;
+        }
+
+        .ajax-loader {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            display: block;
+        }
+
+        .login-modal {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            display: block;
+            opacity: 1.0;
+        }
+
+        input {
+            max-height: 28px;
+        }
+
+        select {
+            max-height: 28px;
+        }
+
+        select option {
+            max-height: 25px;
+            font-size: small;
+        }
+
+        .filter-input input {
+            max-height: 28px;
+        }
+
+        #fieldRow > .col-md-4:nth-child(3n+1) {
+            clear: left;
+        }
+    </style>
+</head>
+
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container" ng-app="MainApp">
+            <div class="col-md-3 left_col" style="height:1500px;">
+                <div class="scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a href="#" class="site_title"><i class="fa fa-home"></i> <span>RECHORD 1.7</span></a>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="profile clearfix">
+                        <div class="profile_pic">
+                            <img src="~/Content/images/empty_profile_image.png" alt="..." class="img-circle profile_img">
+                        </div>
+
+                        <div class="profile_info">
+                            <span>Welcome</span>
+                            <h2></h2>
+                            <span></span>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <h3>General</h3>
+                            <ul class="nav side-menu">
+                                <li>
+                                    <a><i class="fa fa-home"></i> Dashboard <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a target="_self" href="\Home\Dashboard"> My Dashboards </a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a><i class="fa fa-edit"></i> Manage <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li ng-repeat="o in MainMenuList"><a target="_self" href="{{base_url + o.m_Item2}}"> {{o.m_Item1}} </a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-desktop"></i> Setup <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li ng-repeat="o in SetupMenuList"><a target="_self" href="{{base_url + o.m_Item2}}"> {{o.m_Item1}} </a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-bars"></i> Customization <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li ng-repeat="o in CustomMenuList"><a target="_self" href="{{base_url + o.Item2}}"> {{o.Item1}} </a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="menu_section">
+                            <h3>Intel</h3>
+                            <ul class="nav side-menu">
+                                <li>
+                                    <a><i class="fa fa-bars"></i> Reports <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li ng-repeat="o in ReportMenuList"><a target="_self" href="{{base_url + o.m_Item2}}"> {{o.m_Item1}} </a></li>
+                                        <li ng-if="MainMenu['Depreciation']"><a target="_self" href="{{MainMenu['Depreciation']}}"> Depreciation </a></li>
+                                        <li ng-if="MainMenu['MeterWarnings']"><a target="_self" href="{{MainMenu['MeterWarnings']}}"> Meter Warnings </a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-footer hidden-small">
+                        <a data-toggle="tooltip" data-placement="top" title="">
+                            <span class="glyphicon " aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="">
+                            <span class="glyphicon " aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="">
+                            <span class="glyphicon " aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="">
+                            <span class="glyphicon " aria-hidden="true"></span>
+                        </a>
+                    </div>
+                    <!-- /menu footer buttons -->
+                </div>
+            </div>
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <nav>
+                        <div class="nav toggle">
+                            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                        </div>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    Hello {{UserName}}, &nbsp; Role - {{UserRole}} , &nbsp;
+                                    <span class=" fa fa-angle-down"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                    <li ng-show="UserName == undefined"><a target="_self" href="{{base_url}}/account/login">Sign in</a></li>
+                                    <li ng-show="UserName != undefined"><a target="_self" href="{{base_url}}/account/AssignRole">Change Role</a></li>
+                                    <li ng-show="UserName != undefined"><a href="#" ng-click="authService.logOut();"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="right_col" role="main" style="height:100px;">
+                <div id="processing1" style="display: none"><img src="~/Content/images/spinner.gif" class="ajax-loader" /></div>
+                <div id="processing" style="display: none" class="spinner-border text-dark mr-2" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div id="loginModal" ng-show="!IsAuth">
+                    <div class="login-modal" ng-if="!IsAuth">
+                        <div class="x_panel bg-default" style="opacity:1.0;">
+                            <div class="x_header">
+                                Unauthorized Access
+                            </div>
+                            <div class="x_content">
+                                <div class="row bg-dark">
+                                    <div class="col-md-12">
+                                        <a class="btn btn-sm btn-primary" target="_blank" href="~/account/login">Please login again.</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="background-color:#FFFFFF">
+                    @RenderBody()
+                </div>
+            </div>
+            <div class="container body-content">
+                <footer>
+                    <p>&copy; @DateTime.Now.Year - RECHORD.1.7</p>
+                </footer>
+            </div>
+            <footer>
+                <div class="pull-right">
+                    Product By <a href="http://www.ecsatech.com">ECSATECH</a>
+                </div>
+                <div class="clearfix"></div>
+            </footer>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/modernizr")
+    <script src="~/content/vendors/fastclick/lib/fastclick.js"></script>
+    <script src="~/content/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular-animate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.7.8/angular-sanitize.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular-aria.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-local-storage/0.7.1/angular-local-storage.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.20/angular-material.js"></script>
+    
+    <script src="~/content/build/js/custom.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.2.2.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
+
+    @RenderSection("scripts", required: false)
+    <script src="~/scripts/app/account/login.js" type="text/javascript"></script>
+
+
+</body>
+</html>

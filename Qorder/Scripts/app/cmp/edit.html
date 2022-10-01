@@ -1,0 +1,180 @@
+﻿<style>
+    #toast {
+        visibility: hidden;
+        height: 50px;
+        width: fit-content;
+        margin: auto;
+        background-color: rgb(209, 68, 68);
+        color: #fff;
+        text-align: center;
+        border-radius: 10px;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        right: 0;
+        top: 60px;
+        font-size: 17px;
+        white-space: nowrap;
+    }
+
+    #toast #desc {
+        /*  color: #fff;*/
+        padding: 16px;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    #toast.show {
+        visibility: visible;
+        animation: fadein 1s;
+    }
+
+    @keyframes fadein {
+        from {
+            top: 0;
+            opacity: 0;
+        }
+
+        to {
+            top: 60px;
+            opacity: 1
+        }
+    }
+
+    @keyframes fadeout {
+        from {
+            top: 60px;
+            opacity: 1;
+        }
+
+        to {
+            top: 0;
+            opacity: 0;
+        }
+    }
+</style>
+<div style="position:absolute;z-index:20">
+    <div id="toast">
+        <div class="alert alert-info alert-dismissible">
+            <div id="img"></div>
+            <div id="desc">
+                <div ng-show="DefaultMessage.SuccessMessage!=''">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle align-middle me-2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    {{DefaultMessage.SuccessMessage}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div aria-label="breadcrumb" ng-show="config.enable_history">
+    <ol class="breadcrumb card-body">
+        <li ng-repeat="link in historyLinks"
+            class="active breadcrumb-item" ng-click="defaultService.OpenLink(link.url,true)">
+            <a href="#">{{link.text}} </a>
+        </li>
+    </ol>
+    <hr />
+</div>
+
+<div class="tab">
+    <div class="row ">
+        <div class="col-md-2">
+            <h3 class="text-primary" style="text-wrap:none;">{{config.EntityName}} : {{model.Id}}</h3>
+        </div>
+        <div class="col-md-2">
+            <select class="form-select" ng-show="uidata.forms.length > 0" ng-change="ChangeForm(selectedFormId)" ng-model="selectedFormId">
+                <option ng-repeat="f in uidata.forms" ng-value="f.Id">{{f.Name}}</option>
+            </select>
+        </div>
+        <div class="col-md-8">
+            <div class="btn-group float-right">
+
+                <div class="btn-group" ng-show="config.showPrint">
+                    <button class="btn btn-primary dropdown-toggle show" type="button" data-toggle="dropdown">
+                        Print
+                        <span class="caret"></span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" ng-repeat="f in printTemplateList" ng-click="GetPrint(f.Id)">{{f.Name}}</a>
+                    </div>
+                </div>
+                <div class="btn-group" ng-show="config.showEmail">
+                    <button class="btn btn-primary dropdown-toggle show" type="button" data-toggle="dropdown">
+                        Email
+                        <span class="caret"></span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" ng-repeat="f in emailTemplateList" ng-click="Communicate(f.Id)">{{f.Name}}</a>
+                    </div>
+                </div>
+                <button class="btn btn-primary float-right" type="button" ng-click="Edit(model)">Save</button>
+                <button ng-click="defaultService.OpenLink(config.backbutton.url)" class="btn btn-primary">Back</button>
+            </div>
+        </div>
+    </div>
+    <br class="d-block d-sm-block d-md-none" />
+    <ul class="nav nav-tabs" role="tablist"></ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="primary_details" role="tabpanel">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-info alert-dismissible" ng-hide="true">{{DefaultMessage.SuccessMessage}}</div>
+                            <div class="alert alert-danger alert-dismissible" ng-hide="true">
+                                <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+                                <div class="alert-message">
+                                    <strong>Error: </strong>
+                                    {{DefaultMessage.ErrorMessage}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="fieldRow">
+                        <div ng-repeat="f in config.fieldList" class="col-md-{{f.weight + 1}} col-xs-12 col-sm-12">
+                            <div compile ng-bind-html="f.view" style="padding-right:5px;padding-left:5px;"></div>
+                            <div class="clearfix" ng-if="(($index + (4 - config.cols)) % config.cols)==0"><br /></div>
+                            <div class="clearfix" ng-if="(($index + (4 - config.cols)) % config.cols)==0"><br /></div>
+                        </div>
+                    </div>
+                    </br>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="btn-group">
+                                <a class="btn btn-secondary" ng-repeat="f in actionList" ng-click="EditAction(f.Id)">{{f.Name}}</a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="btn-group float-right">
+                                <button class="btn btn-secondary" ng-repeat="f in config.btnList" ng-click="ExecFunction(f)">{{f.name}}</button>
+                                <button class="btn btn-primary float-right" type="button" ng-click="Edit(model)">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <style>
+                .nav-item.active {
+                    border-top: 2px solid black;
+                }
+            </style>
+            <div class="card">
+                <div class="tab">
+                    <ul class="nav nav-tabs" role="tablist" style="overflow-x: auto;overflow-y: hidden;flex-wrap:nowrap;">
+                        <li class="nav-item {{$index==0?'active':''}}" ng-repeat="m in config.tabList">
+                            <a class="nav-link {{$index==0?'active':''}}" href="#{{m.id}}" data-toggle="tab" role="tab"><span style="white-space:nowrap;">{{m.text}}</span></a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <br />
+                        <div class="tab-pane {{$index==0?'active':''}}" id="{{m.id}}" role="tabpanel" aria-selected="{{$index == 0}}" ng-repeat="m in config.tabList" ng-if="config.Entity.Id != 0">
+                            <sub-list ng-if="_c.tab==m.id" input="_c" parent="config" ng-repeat="_c in config.childListConfigs"></sub-list>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+</div>
+</div>

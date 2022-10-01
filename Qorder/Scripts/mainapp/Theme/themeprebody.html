@@ -1,0 +1,117 @@
+﻿<div class="container" ng-if="!IsAuth" style="height: 100%;">
+    <div class="row h-100">
+        <div class="col-sm-12 align-self-center">
+            <div class="card card-block w-25 mx-auto">
+                <div class="row text-center">
+                    <div class="col-md-12">
+                        <h4>Unauthorized Access</h4>
+                    </div>
+                    <div class="col-md-12">
+                        <a class="btn btn-sm btn-primary" target="_blank" href="{{base_url}}/account/login"> Please login.</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrapper" ng-cloak ng-if="IsAuth">
+    <nav id="sidebar" class="sidebar">
+        <div class="sidebar-content js-simplebar">
+            <a class="sidebar-brand" href="#">
+                <span class="align-middle">RECHORD 1.0</span>
+            </a>
+            <ul class="sidebar-nav">
+                <li class="sidebar-header">
+                    Home
+                </li>
+                <li class="sidebar-item" ng-repeat="menu in AllMenu">
+                    <a data-target="#ui{{$index}}" data-toggle="collapse" class="sidebar-link collapsed" aria-expanded="{{menu.urlList.includes(currentUrl.toLowerCase())}}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu align-middle"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                        <span class="align-middle">{{menu.pageName}} </span>
+                    </a>
+                    <ul id="ui{{$index}}" class="sidebar-dropdown list-unstyled collapse {{menu.urlList.includes(currentUrl.toLowerCase())?'in show':''}}" data-parent="#sidebar">
+                        <li class="sidebar-item {{(o.url == currentUrl)? 'active':''}}" ng-repeat="o in menu.List" ng-click="defaultService.OnMenuClick(o.url);">
+                            <a class="sidebar-link {{( o.url == currentUrl)? 'active':''}}" target="_self" href="">  <span class="align-middle"> {{o.linkName}} </span></a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="sidebar-cta" style="display:block">
+                <div class="sidebar-cta-content">
+                    <strong class="d-inline-block mb-2">Contact Us</strong>
+                    <div class="mb-3 text-sm">
+                        For any feedback, please contact us at ecsatech.com.
+                    </div>
+                    <a href="http://www.ecsatech.com/contact-2/" target="_blank" class="btn btn-primary btn-block">ECSATECH</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="main">
+        <nav class="navbar navbar-expand navbar-light navbar-bg">
+            <a class="sidebar-toggle d-flex">
+                <i class="hamburger align-self-center"></i>
+            </a>
+            <form class="d-none d-sm-inline-block" style="display:none;">
+                <div class="input-group input-group-navbar">
+                    <input type="text" class="form-control" placeholder="Search…" ng-model="query_text" aria-label="Search">
+                    <button class="btn" type="button" ng-click="Search()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search align-middle"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    </button>
+                </div>
+                <ul class="card dropdown-menu" style="z-index:10;position:absolute;box-shadow:0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;margin-left:20px;">
+                    <li class="dropdown-item" ng-repeat="s in ResultList"><a target="_blank" href="{{base_url}}/{{s.type}}/Edit/?Id={{s.Id}}">{{s.ApplicationNumber}} {{s.ApplicationNumber?":":""}} {{s.Name}}</a></li>
+                </ul>
+            </form>
+            <img src="{{logoURL}}" ng-show="logoURL !=''" style="height:50px;" />
+            <div class="navbar-collapse collapse">
+                <ul class="navbar-nav navbar-align">
+                    <li class="nav-item dropdown">
+                        <a class="nav-icon dropdown-toggle {{show_alerts?'show':''}}" href="#" id="alertsDropdown" data-bs-toggle="dropdown" aria-expanded="{{show_alerts}}" ng-click="toggleAlert();">
+                            <div class="position-relative">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell align-middle"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                                <span class="indicator">{{previousAlertCount + messages.length}}</span>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0 {{show_alerts?'show':''}}" aria-labelledby="alertsDropdown" data-bs-popper="none">
+                            <div class="dropdown-menu-header">
+                                {{ previousAlertCount + messages.length}} New Notifications
+                            </div>
+                            <div class="list-group">
+                                <a href="#" class="list-group-item" ng-repeat="item in messages| limitTo:5">
+                                    <div class="row g-0 align-items-center">
+                                        <div class="col-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle text-danger"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                                        </div>
+                                        <div class="col-10">
+                                            <div class="text-dark">{{item.name}}</div>
+                                            <div class="text-muted small mt-1">{{item.message}}</div>
+                                            <div class="text-muted small mt-1">{{item.time}}</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="dropdown-menu-footer">
+                                <a href="/alert/index" target="_self" class="text-muted">Show all notifications</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-toggle="dropdown">
+                            <i class="align-middle" data-feather="settings"></i>
+                        </a>
+                        <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-toggle="dropdown">
+                            <span class="text-dark">Hello {{UserName}}, &nbsp; Role : {{UserRole}}  &nbsp;</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" ng-show="UserName != undefined" target="_self" href="{{base_url}}/roleselect/Assign">Change Role</a>
+                            <a class="dropdown-item" ng-show="UserName != undefined" href="#" ng-click="authService.logOut();"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <main class="content" style="padding-top:0px !important;padding-left:10px;padding-right:10px;">
+            <div class="d-flex justify-content-start bd-highlight mb-3 bg-primary-light bg-gradient"><div class="p-2 bd-highlight text-dark">{{vcentname!=null?vcentname:'HOME'}} </div></div>
+            <div class="container-fluid p-0">
+                <div id="processing1" style="display: none"><img src="../../../Content/images/spinner.gif" class="ajax-loader" /></div>

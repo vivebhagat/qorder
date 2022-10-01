@@ -1,0 +1,65 @@
+﻿<!-- <md-dialog aria-label="">-->
+<style>
+    @media screen and (min-width: 800px) {
+        .editwrapper {
+            max-width: 50vw;
+        }
+    }
+    @media screen and (max-width: 800px) {
+        .editwrapper {
+            margin-left: 5px !important;
+            margin-right: 5px !important;
+        }
+    }
+</style>
+<div class="editwrapper" style="position:relative;margin:auto;justify-content:center;
+box-shadow:0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important">
+    <!--   <div class="container-fluid p-0">-->
+    <div class="card" style="max-height:90vh;min-height:90vh;">
+        <div class="card-header bg-info">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2 ng-if="model_id == 0">Add</h2>
+                    <h2 ng-if="model_id != 0">Edit  {{model.Id}}</h2>
+                </div>
+                <div class="col-md-6">
+                    <div class="btn-group float-right">
+                        <select class="form-select" ng-show="uidata.forms.length > 0" ng-change="ChangeForm(selectedFormId)" ng-model="selectedFormId">
+                            <option ng-repeat="f in uidata.forms" ng-value="f.Id">{{f.Name}}</option>
+                        </select>
+                        <button ng-show="model_id != 0" ng-click="AddNew()" class="btn btn-primary">New</button>
+                        <button class="btn btn-primary float-right" ng-click="cancel()">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div style="overflow-y:auto !important;overflow-x:hidden !important;max-height:60vh;min-height:60vh;padding:5px;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-info alert-dismissible" ng-show="DefaultMessage.SuccessMessage!=''">
+                            <div class="alert-message">{{ DefaultMessage.SuccessMessage }}</div>
+                        </div>
+                        <div class="alert alert-danger alert-dismissible" ng-show="DefaultMessage.ErrorMessage!=''">
+                            <div class="alert-message">{{ DefaultMessage.ErrorMessage }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div ng-repeat="f in config.addfieldList" class="col-xl-6 col-md-6 col-sx-12 col-sm 12" compile ng-bind-html="f.view"></div><br />
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <button class="btn btn-primary float-right" type="button" ng-if="model_id == 0" ng-click="Add(model)">Add</button>
+                    <button class="btn btn-primary float-right" type="button" ng-if="model_id != 0" ng-click="Edit(model)">Save</button>
+                </div>
+            </div>
+        </div>
+        </div>
+</div>
+    <!--    </div>-->
+    <!--</md-dialog>-->

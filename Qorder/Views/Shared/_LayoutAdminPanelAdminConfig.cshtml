@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="MainApp" ng-cloak ng-controller="MainAppCtrl">
+<head>
+    <meta charset="utf-8">
+    <title>RECHORD 1.0 - ECSATECH</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1, user-scalable=no">
+    <link rel="shortcut icon" href="~/Scripts/app/account/rechord_logo.png" />
+
+    <!--    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" rel="stylesheet"  />-->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular.min.js"></script>
+    <link as="style" rel="preload stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-cookies/1.7.8/angular-cookies.min.js" integrity="sha512-hm0dF/wn+bi0rmDovur+igAqDtl2itcMXFkU9LZ5uwOQLivPgg4RKzu4aylv8hZEl5h3sbYmk95pKsi+lhnHdg==" crossorigin="anonymous"></script>
+    @Html.Raw(ViewBag.CustomContent == null ? "" : ViewBag.CustomContent["themehead"] ?? "")
+    @Html.Raw(ViewBag.CustomContent == null ? "" : ViewBag.CustomContent["head"] ?? "")
+</head>
+<body>
+
+    @Html.Raw(ViewBag.CustomContent == null ? "" : ViewBag.CustomContent["themeprebody"] ?? "")
+    @RenderBody()
+    @Html.Raw(ViewBag.CustomContent == null ? "" : ViewBag.CustomContent["themepostbody"] ?? "")
+    @Html.Raw(ViewBag.CustomContent == null ? "" : ViewBag.CustomContent["themefooter"] ?? "")
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://unpkg.com/%40angular/router%400.2.0/angular1/angular_1_router.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular-animate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.7.8/angular-sanitize.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular-aria.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-local-storage/0.7.1/angular-local-storage.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-flatpickr/3.6.6/ng-flatpickr.min.js" integrity="sha512-5REKNeo6Q4apvGxIMyUHA0sMEbxe6SAcmboeVMuZxc7Jbu4TS1xmVFWs0qy9pR6EqHYyc8sB6Y3CtIhprKJgbw==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
+    @Html.Raw(ViewBag.CustomContent == null ? "" : ViewBag.CustomContent["beforeapp"] ?? "")
+    <script src="/scripts/jquery.signalR-2.4.2.min.js"></script>
+    <script src="/signalr/hubs"></script>
+    @RenderSection("scripts", required: false)
+    @Html.Raw(ViewBag.CustomContent == null ? "" : ViewBag.CustomContent["afterapp"] ?? "")
+</body>
+</html>

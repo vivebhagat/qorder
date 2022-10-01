@@ -1,0 +1,734 @@
+﻿
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Welcome To Website</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="styles.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        /* Remove the navbar's default margin-bottom and rounded borders */
+        .navbar {
+            margin-bottom: 0;
+            border-radius: 0;
+            background-color: #9fcd5a;
+        }
+
+        /* Add a gray background color and some padding to the footer */
+        footer {
+            background-color: #f2f2f2;
+            padding: 25px;
+        }
+
+        .carousel-inner img {
+            width: 100%; /* Set width to 100% */
+            margin: auto;
+            min-height: 200px;
+        }
+
+        /* Hide the carousel text when the screen is less than 600 pixels wide */
+        @@media (max-width: 600px) {
+            .carousel-caption {
+                display: none;
+            }
+        }
+
+        .nav.navbar-nav.navbar-right li a {
+            color: white;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #background {
+            left: 0px;
+            top: 0px;
+            position: relative;
+            margin-left: auto;
+            margin-right: auto;
+            width: 1920px;
+            height: 2640px;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        #Background {
+            left: 0px;
+            top: 0px;
+            position: absolute;
+            width: 1920px;
+            height: 2640px;
+            z-index: 1;
+        }
+
+        #footerbackground {
+            left: 0px;
+            top: 2025px;
+            position: absolute;
+            width: 1920px;
+            height: 615px;
+            z-index: 2;
+        }
+
+        #CONNECTWITHEASYLIVIN {
+            left: 1074px;
+            top: 2093px;
+            position: absolute;
+            width: 315px;
+            height: 16px;
+            z-index: 3;
+        }
+
+        #facebookicon {
+            left: 1472px;
+            top: 2087px;
+            position: absolute;
+            width: 82px;
+            height: 28px;
+            z-index: 4;
+        }
+
+        #Melbourne03909486007 {
+            left: 100px;
+            top: 2270px;
+            position: absolute;
+            width: 379px;
+            height: 248px;
+            z-index: 5;
+        }
+
+        #Sydney028116150064Pe {
+            left: 564px;
+            top: 2270px;
+            position: absolute;
+            width: 425px;
+            height: 223px;
+            z-index: 6;
+        }
+
+        #Brisbane073851750017 {
+            left: 1041px;
+            top: 2271px;
+            position: absolute;
+            width: 305px;
+            height: 109px;
+            z-index: 7;
+        }
+
+        #ABOUTAboutUsServiceM {
+            left: 1459px;
+            top: 2212px;
+            position: absolute;
+            width: 171px;
+            height: 274px;
+            z-index: 8;
+        }
+
+        #ELEVATORSHomeElevato {
+            left: 1705px;
+            top: 2210px;
+            position: absolute;
+            width: 117px;
+            height: 153px;
+            z-index: 9;
+        }
+
+        #footerlogo {
+            left: 89px;
+            top: 2062px;
+            position: absolute;
+            width: 224px;
+            height: 77px;
+            z-index: 10;
+        }
+
+        #FooterFINDASHOWROOM {
+            left: 103px;
+            top: 2210px;
+            position: absolute;
+            width: 254px;
+            height: 19px;
+            z-index: 11;
+        }
+
+        #footerlines {
+            left: 22px;
+            top: 2162px;
+            position: absolute;
+            width: 1857px;
+            height: 393px;
+            z-index: 12;
+        }
+
+        #GREYBACKGROUND {
+            left: 0px;
+            top: 712px;
+            position: absolute;
+            width: 1920px;
+            height: 443px;
+            z-index: 13;
+        }
+
+        #YOURDOCUMENTS {
+            left: 739px;
+            top: 796px;
+            position: absolute;
+            width: 515px;
+            height: 32px;
+            z-index: 14;
+        }
+
+        #LIFTTYPE {
+            left: 384px;
+            top: 934px;
+            position: absolute;
+            width: 121px;
+            height: 14px;
+            z-index: 15;
+        }
+
+        #LIFTNUMBER {
+            left: 384px;
+            top: 1016px;
+            position: absolute;
+            width: 165px;
+            height: 14px;
+            z-index: 16;
+        }
+
+        #BOX {
+            left: 389px;
+            top: 1186px;
+            position: absolute;
+            width: 374px;
+            height: 536px;
+            z-index: 17;
+        }
+
+        #BOXcopy {
+            left: 817px;
+            top: 1186px;
+            position: absolute;
+            width: 374px;
+            height: 536px;
+            z-index: 18;
+        }
+
+        #BOXcopy2 {
+            left: 1247px;
+            top: 1186px;
+            position: absolute;
+            width: 374px;
+            height: 536px;
+            z-index: 19;
+        }
+
+        #GREENTICK {
+            left: 551px;
+            top: 1468px;
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            z-index: 20;
+        }
+
+        #GREENTICKcopy {
+            left: 984px;
+            top: 1468px;
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            z-index: 21;
+        }
+
+        #GREENTICKcopy2 {
+            left: 1409px;
+            top: 1468px;
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            z-index: 22;
+        }
+
+        #WARRANTY {
+            left: 509px;
+            top: 1290px;
+            position: absolute;
+            width: 134px;
+            height: 134px;
+            z-index: 23;
+        }
+
+        #CONTRACT {
+            left: 951px;
+            top: 1277px;
+            position: absolute;
+            width: 116px;
+            height: 146px;
+            z-index: 24;
+        }
+
+        #INFO {
+            left: 1369px;
+            top: 1286px;
+            position: absolute;
+            width: 129px;
+            height: 128px;
+            z-index: 25;
+        }
+
+        #downloadwarrantytxt {
+            left: 434px;
+            top: 1677px;
+            position: absolute;
+            width: 286px;
+            height: 14px;
+            z-index: 26;
+        }
+
+        #downloadwarrantytxtc {
+            left: 917px;
+            top: 1677px;
+            position: absolute;
+            width: 173px;
+            height: 14px;
+            z-index: 27;
+        }
+
+        #downloadwarrantytxtc_0 {
+            left: 1309px;
+            top: 1677px;
+            position: absolute;
+            width: 251px;
+            height: 14px;
+            z-index: 28;
+        }
+
+        #WARRANTYTEXT {
+            left: 488px;
+            top: 1223px;
+            position: absolute;
+            width: 176px;
+            height: 19px;
+            z-index: 29;
+        }
+
+        #SERVICECONTRACTTXT {
+            left: 845px;
+            top: 1223px;
+            position: absolute;
+            width: 322px;
+            height: 19px;
+            z-index: 30;
+        }
+
+        #OWNERSMANUALTXT {
+            left: 1294px;
+            top: 1223px;
+            position: absolute;
+            width: 281px;
+            height: 19px;
+            z-index: 31;
+        }
+
+        #EXPIRESTEXT {
+            left: 898px;
+            top: 1589px;
+            position: absolute;
+            width: 70px;
+            height: 16px;
+            z-index: 32;
+        }
+
+        #evedrythingyouneedco {
+            left: 1296px;
+            top: 1589px;
+            position: absolute;
+            width: 277px;
+            height: 17px;
+            z-index: 33;
+        }
+
+        #Headerphoto {
+            left: -9px;
+            top: 0px;
+            position: absolute;
+            width: 1929px;
+            height: 712px;
+            z-index: 34;
+        }
+
+        #ARROW {
+            left: 1144px;
+            top: 133px;
+            position: absolute;
+            width: 11px;
+            height: 6px;
+            z-index: 35;
+        }
+
+        #ARROWcopy {
+            left: 1015px;
+            top: 133px;
+            position: absolute;
+            width: 11px;
+            height: 6px;
+            z-index: 36;
+        }
+
+        #ARROWcopy2 {
+            left: 711px;
+            top: 133px;
+            position: absolute;
+            width: 11px;
+            height: 6px;
+            z-index: 37;
+        }
+
+        #ARROWcopy3 {
+            left: 1329px;
+            top: 133px;
+            position: absolute;
+            width: 11px;
+            height: 6px;
+            z-index: 38;
+        }
+
+        #ARROWGREEN {
+            left: 840px;
+            top: 133px;
+            position: absolute;
+            width: 11px;
+            height: 6px;
+            z-index: 39;
+        }
+
+        #headerlogo {
+            left: 100px;
+            top: 95px;
+            position: absolute;
+            width: 345px;
+            height: 121px;
+            z-index: 40;
+        }
+
+        #HOME {
+            left: 642px;
+            top: 125px;
+            position: absolute;
+            width: 60px;
+            height: 16px;
+            z-index: 41;
+        }
+
+        #CONTACT {
+            left: 1225px;
+            top: 126px;
+            position: absolute;
+            width: 98px;
+            height: 16px;
+            z-index: 42;
+        }
+
+        #OURRANGE {
+            left: 883px;
+            top: 126px;
+            position: absolute;
+            width: 122px;
+            height: 16px;
+            z-index: 43;
+        }
+
+        #HOME_0 {
+            left: 1075px;
+            top: 125px;
+            position: absolute;
+            width: 59px;
+            height: 16px;
+            z-index: 44;
+        }
+
+        #ABOUT {
+            left: 758px;
+            top: 126px;
+            position: absolute;
+            width: 71px;
+            height: 16px;
+            z-index: 45;
+        }
+
+        #Headergreenbar {
+            left: 0px;
+            top: 0px;
+            position: absolute;
+            width: 1920px;
+            height: 49px;
+            z-index: 46;
+        }
+
+        #AMESSAGETOOURCOMMUNI {
+            left: 745px;
+            top: 19px;
+            position: absolute;
+            width: 478px;
+            height: 9px;
+            z-index: 47;
+        }
+
+        #GREENBOXSEARCH {
+            left: 1600px;
+            top: 88px;
+            position: absolute;
+            width: 290px;
+            height: 50px;
+            z-index: 48;
+        }
+
+        #HEADERSEARCH {
+            left: 1622px;
+            top: 102px;
+            position: absolute;
+            width: 253px;
+            height: 23px;
+            z-index: 49;
+        }
+
+        #SEARCH {
+            left: 1621px;
+            top: 102px;
+            position: absolute;
+            width: 158px;
+            height: 12px;
+            z-index: 50;
+        }
+
+        #DOMUSEVOLUTIONLIFTTh {
+            left: 384px;
+            top: 349px;
+            position: absolute;
+            width: 1257px;
+            height: 260px;
+            z-index: 51;
+        }
+    </style>
+</head>
+<body ng-app="MainApp" ng-controller="MainCtrl">
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Our Range</a></li>
+                    <li><a href="#">News</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+
+                <span class="navbar-text" style="color: #000; text-align: center;">
+                    A MESSAGE TO OUR COMMUNITY - UPDATES / LIFT MIGRATION FOR THE NBN
+                </span>
+
+            </div>
+        </div>
+    </nav>
+
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            <img src="~/content/images/test/Headerphoto.png" alt="Image" class="img-responsive">
+        </div>
+
+    </div>
+
+
+
+    <div class="container">
+        <center><h1>YOUR DOCUMENTS </h1><br></center>
+        <div class="jumbotron">
+            <h3 class="display-3">LIFT TYPE</h3><b>{{MainModel.SerialCode}}</b>
+            <h3 class="display-3">LIFT NUMBER</h3><b>{{MainModel.Amount * 4}}</b>
+            <br />
+            Current Status is {{MainModel.Inactive}}.
+            <input ng-model="MainModel.SerialCode" />
+            <input ng-model="MainModel.Amount" />
+
+            <button type="button" ng-click="Refresh();">Refresh!</button>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <img src="~/content/images/test/WARRANTY1.png" class="img-responsive" style="width:100%" alt="Image">
+
+            </div>
+            <div class="col-sm-4">
+                <img src="~/content/images/test/SERVICECONTRACTTXT1.png" class="img-responsive" style="width:100%" alt="Image">
+
+            </div>
+            <div class="col-sm-4">
+                <img src="~/content/images/test/OWNERSMANUALTXT1.png" class="img-responsive" style="width:100%" alt="Image">
+
+            </div>
+        </div>
+    </div><br>
+
+    <footer class="container-fluid" style="background-color: #000; color: #fff;">
+
+        <div class="row">
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <img src="~/content/images/test/headerlogo.png" class="img-responsive" style="width:30%;" alt="Image">
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+                <span style="float: left;"><h4>CONNECTED WITH EASY LIVING</h4> </span><img src="~/content/images/test/facebookicon.png" class="img-responsive" alt="Image" style="float: left; margin-left: 20px;">
+
+            </div>
+        </div>
+        <hr style="color: #fff;">
+        <div class="row">
+
+
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <ul class="adress" style="list-style-type: none;">
+                    <span><h4 style="color: #9fcd5a;">FIND A SHOWROOM</h4></span>
+                    <br>
+                    <br>
+                    <li>
+                        <p>
+                            Melbourne<br>
+                            03 9094 8600<br>
+                            7 Hoddle St Collingwood VIC, 3066
+                        </p>
+                    </li>
+                    <br>
+                    <span>Perth</span>
+                    <li>
+                        <p>
+                            08 6272 90400<br>
+                            Unit 6, 347-351 Great Eastern Hwy,<br>
+                            Redcliffe WA 6104
+                        </p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <ul class="contact" style="list-style-type: none;">
+                    <br>
+                    <br>
+                    <li>
+                        <p>
+                            Sydney<br>
+                            02 8116 1500<br>
+                            64 Penshurst St, Willoughby NSW 2068
+                        </p>
+                    </li>
+                    <br>
+
+                    <li>
+                        <p>
+                            Adelaide<br>
+                            08 8231 8858<br>
+                            165 Grote Street, Adelaide SA, 5000
+                        </p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+                <ul class="social" style="list-style-type: none;">
+                    <br>
+                    <br>
+                    <li>
+                        <p>
+                            Brisbane<br>
+                            07 3851 7500<br>
+                            17 Campbell St, Bowen Hills<br>
+                            (Entry via Jamieson St)
+                        </p>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+                <ul class="adress" style="list-style-type: none;">
+                    <span style="color: #9fcd5a;">ABOUT</span>
+                    <br>
+                    <br>
+                    <li>
+                        <p>
+                            About Us<br>
+                            Services & Maintenance<br>
+                            Case Studies<br>
+                            Careers<br>
+                            FAQs<br>
+                            Contact
+                        </p>
+                    </li>
+
+                </ul>
+            </div>
+
+            <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+                <ul class="adress" style="list-style-type: none;">
+                    <span style="color: #9fcd5a;">ELEVATORS</span>
+                    <br>
+                    <br>
+                    <li>
+                        <p>
+                            Home Elevators<br>
+                            Plateform Lifts<br>
+                            Services Lifts
+                        </p>
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+
+    </footer>
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular.min.js"></script>
+<script>
+
+    var app = angular.module('MainApp', []);
+    app.controller('MainCtrl', function ($scope,$http) {
+        $scope.MainModel = { Name: 'DomusList', Number: 1 };
+
+
+        $scope.Refresh = function () {
+            $http.get('http://localhost:52383/api/asset/get/?Id=532')
+                .then(function (response) {
+                    $scope.MainModel = response.data.Result;
+                },
+                    function (response) {
+
+                    });
+        }
+    });
+        
+
+</script>
+</html>

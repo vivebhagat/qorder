@@ -1,0 +1,48 @@
+﻿<md-dialog aria-label="">
+    <div class="card" style="min-width:500px;">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Search</h2>                   
+                </div>
+                <div class="col-md-6 ">
+                    <button class="btn btn-primary float-right" ng-click="cancel()">
+                         Close
+                    </button>
+                </div>
+            </div>
+            <div class="x_panel">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-info alert-dismissible" ng-show="DefaultMessage.SuccessMessage!=\'\'">{{ DefaultMessage.SuccessMessage }}</div>' +
+                        <div class="alert alert-danger alert-dismissible" ng-show="DefaultMessage.ErrorMessage!=\'\'">{{ DefaultMessage.ErrorMessage }}</div>' +
+                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10">
+                        <input class="form-control" ng-model="value">
+                    </div><div class="col-md-2"><button class="btn btn-secondary float-right" ng-click="Search();">Search</button></div>
+                    <div class="col-md-12">
+                        <ul class="pagination pull-right">
+                            <li class="paginate_button previous disabled" id="example2_previous">
+                                <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0"><<</a>' +
+                            </li>
+                            <li ng-repeat="n in range(Count, filter.PageSize)" ng-class="{active: n+1 == filter.PageIndex}" ng-click="setPage()">
+                                <a ng-bind="n+1">1</a>
+                            </li>
+                            <li class="paginate_button previous disabled" id="example2_previous">
+                                <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0">>></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12"><select ng-model="selected" class="form-control"><option ng-repeat="m in OptionList" ng-value="{{m}}">{{m.Name}}</option></select></div><br />
+                    </div><br /><hr>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button class="btn btn-primary float-right" type="button" ng-click="select()">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</md-dialog>

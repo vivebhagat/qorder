@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+    <link rel="shortcut icon" href="~/Scripts/app/account/rechord_logo.png" />
+    <title>RECHORD 1.0 - ECSATECH</title>
+    <link href="~/Content/adminkit/css/app.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-cookies/1.7.8/angular-cookies.min.js" integrity="sha512-hm0dF/wn+bi0rmDovur+igAqDtl2itcMXFkU9LZ5uwOQLivPgg4RKzu4aylv8hZEl5h3sbYmk95pKsi+lhnHdg==" crossorigin="anonymous"></script>
+    <style>
+        md-select {
+            margin-bottom: 0px !important;
+            margin-top: 0px !important;
+        }
+
+        #loginModal {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            background-color: grey;
+            opacity: 0.8;
+        }
+
+        #processing {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            background-color: grey;
+            opacity: 0.4;
+        }
+
+        .ajax-loader {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            display: block;
+        }
+
+        .login-modal {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            display: block;
+            opacity: 1.0;
+        }
+
+        input {
+            max-height: 28px;
+        }
+
+        select {
+            max-height: 28px;
+        }
+
+            select option {
+                max-height: 25px;
+                font-size: small;
+            }
+
+        .filter-input input {
+            max-height: 28px;
+        }
+
+        #fieldRow > .col-md-4:nth-child(3n+1) {
+            clear: left;
+        }
+    </style>
+    <style>
+        /* width */
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 8px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            width: 5px;
+            height: 8px;
+            background: #888;
+        }
+
+            /* Handle on hover */
+            ::-webkit-scrollbar-thumb:hover {
+                background: #555;
+            }
+    </style>
+    @Html.Raw(ViewBag.CustomContent == null ? "" : ViewBag.CustomContent["head"] ?? "")
+</head>
+<body >
+    @Html.Raw(ViewBag.CustomContent == null ? "" : ViewBag.CustomContent["main"] ?? "")
+    <div ng-app="MainApp" ng-cloak ng-controller="MainAppCtrl">
+    @RenderBody()
+   </div>
+    @Html.Raw(ViewBag.CustomContent == null ? "" : ViewBag.CustomContent["beforeapp"] ?? "")
+    <script src="~/Content/adminkit/js/app.js"></script>
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <script src="https://unpkg.com/%40angular/router%400.2.0/angular1/angular_1_router.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular-animate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.7.8/angular-sanitize.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular-aria.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-local-storage/0.7.1/angular-local-storage.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-flatpickr/3.6.6/ng-flatpickr.min.js" integrity="sha512-5REKNeo6Q4apvGxIMyUHA0sMEbxe6SAcmboeVMuZxc7Jbu4TS1xmVFWs0qy9pR6EqHYyc8sB6Y3CtIhprKJgbw==" crossorigin="anonymous"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.2.2.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
+
+    @RenderSection("scripts", required: false)
+    @Html.Raw(ViewBag.CustomContent == null ? "" : ViewBag.CustomContent["afterapp"] ?? "")
+</body>
+</html>

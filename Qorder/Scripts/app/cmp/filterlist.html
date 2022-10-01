@@ -1,0 +1,107 @@
+﻿<div class="x_panel">
+    <div class="row x_title">
+        <div class="col-md-6">
+            <h2> {{config.EntityName}} : {{Filter.Name}}</h2>
+        </div>
+        <div class="col-md-6">
+            <div class="btn-group pull-right">
+            </div>
+        </div>
+    </div>
+    <div ng-show="{{config.use_filter}}">
+        <div class="x_panel">
+            <div class="row ">
+                <div class="col-md-2">
+                    <label>Filter</label>
+                    </div>
+                    
+                </div>
+            <br>
+            <div class="row " id="FilterPanel">
+                <div class="col-md-3" compile ng-bind-html="f.view" ng-repeat="f in config.filterFieldList"></div>
+            </div>
+            <div class="row ">
+                <div class="col-md-11">
+                </div>
+                <div class="col-md-1">
+                    <button ng-click="GetList()" class="btn btn-sm btn-default pull-right">Filter</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-1">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label>Records</label>
+                        </div>
+                        <div class="col-md-7">
+                            <select ng-model="filter.PageSize" ng-change="ChangePageSize()" class="form-control">
+                                <option ng-repeat="o in PageSizeList" ng-value="o">{{ o }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                </div>
+                <div class="col-md-6">
+                    <ul class="pagination pull-right">
+                        <li class="paginate_button previous disabled" id="example2_previous">
+                            <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0"><<</a>
+                        </li>
+                        <li ng-repeat="n in range(Count, filter.PageSize)"
+                            ng-class="{active: n+1 == filter.PageIndex}"
+                            ng-click="setPage()">
+                            <a ng-bind="n+1">1</a>
+                        </li>
+                        <li class="paginate_button previous disabled" id="example2_previous">
+                            <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0">>></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--
+            <div class="x_panel" ng-show="config.onscreenAdd">
+                <div class="row">
+                    <div class="col-md-3" compile ng-bind-html="f.view" ng-repeat="f in config.fieldList"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn btn-sm btn-default pull-right" type="button" ng-click="Add(model)">Add</button>
+                    </div>
+                </div>
+            </div>-->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-info alert-dismissible" ng-show="DefaultMessage.SuccessMessage!=''">{{DefaultMessage.SuccessMessage}}</div>
+            <div class="alert alert-danger alert-dismissible" ng-show="DefaultMessage.ErrorMessage!=''">{{DefaultMessage.ErrorMessage}}</div>
+        </div>
+    </div>
+    <div>
+        <div class="x_content" >
+                    <table class="table table-striped  dataTable no-footer display nowrap" id="MainTable"  role="grid" style="width:100%" >
+                        <thead>
+                            <tr style="text-align:center">
+                                <th>
+                                    <label> UID </label>
+                                </th>
+                                <th compile ng-bind-html="f.view" ng-repeat="f in config.thList"></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="m in MainList">
+                                <td>
+                                    {{m.Id}}
+                                </td>
+                                <td compile ng-bind-html="f.view" ng-repeat="f in config.tdList"></td>
+                                <td>
+                                    <div class="btn-group pull-right">
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>

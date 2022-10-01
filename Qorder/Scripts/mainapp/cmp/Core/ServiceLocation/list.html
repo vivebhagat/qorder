@@ -1,0 +1,139 @@
+﻿<div ng-click="mainClick($event)">
+    <div style="z-index:100;position:fixed;top:10px;left:0px;display:block;width:100%;height:100%;" class="modal fade show" ng-if="show_panel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <edit-panel ng-if="show_panel" showflag="show_panel" iconfig="config" modelid="imodel"></edit-panel>
+            </div>
+        </div>
+    </div>
+    <div aria-label="breadcrumb" ng-show="config.enable_history">
+        <ol class="breadcrumb card-body">
+            <li ng-repeat="link in historyLinks"
+                class="active breadcrumb-item" ng-click="defaultService.OpenLink(link.url,true)">
+                <a href="#">{{link.text}} </a>
+            </li>
+        </ol>
+        <hr />
+    </div>
+    <div class="card" ng-show="config.showParent">
+        <div class="card-header">
+            <h5 class="card-title mb-0">Parent Details </h5>
+        </div>
+        <div class="card-body">
+            <div class="row" id="parentfieldRow">
+                <div ng-repeat="f in config.parentFieldList" class="col-md-{{12/config.cols}} col-{{12/config.cols}}">
+                    <div compile ng-bind-html="f.view" style="padding-right:50px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card" style="padding:0.5rem 0.5rem!important;">
+        <div class="row ">
+            <div class="col-md-2">
+                <h3 class="text-primary">{{config.EntityName}}</h3>
+            </div>
+            <div class="col-md-2">
+                <div class="input-group mb-2 me-sm-2" ng-show="config.use_filter">
+                    <select ng-model="FilterId" ng-change="GetFilter(FilterId)" class="form-control">
+                        <option>None</option>
+                        <option ng-repeat="o in FilterList" ng-value="o.Id">{{ o.Name }}</option>
+                    </select>
+                    <button ng-click="FilterAll()" class="btn btn-secondary  float-right"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-filter align-middle me-2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg></button>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="float-right">
+                    <button ng-click="showAdvanced($event)" ng-show="config.onscreenAdd" class="btn btn-primary">+</button>
+                    <button ng-click="defaultService.OpenLink(config.addbutton.url)" ng-show="config.onPageAdd" class="btn btn-primary">+</button>
+                    <button ng-click="defaultService.OpenLink(config.backbutton.url)" ng-show="config.backbutton.show" class="btn btn-primary">Back</button>
+                    <button ng-repeat="btn in config.btnList" ng-click="defaultService.OpenLink(btn.url)" class="btn btn-primary">{{btn.Text}}</button>
+                    <button ng-repeat="btn in config.btnActionList" ng-click="PerformAction(btn.action)" class="btn btn-primary">{{btn.Text}}</button>
+                </div>
+            </div>
+        </div>
+        <br class="d-block d-sm-block d-md-none" />
+        <div>
+            <div class="card-body bg-light border" ng-show="config.use_filter">
+                <div class="row " id="FilterPanel">
+                    <div class="col-md-3" ng-repeat="f in config.filterFieldList"><div compile ng-bind-html="f.view"></div></div>
+                </div>
+                <hr ng-show="config.filterFieldList.length>0">
+                <div class="row">
+                    <div class="col-md-1">
+                        <select ng-model="filter.PageSize" ng-change="ChangePageSize()" class="form-control form-control-sm">
+                            <option ng-repeat="o in PageSizeList" ng-value="o">{{ o }} Records </option>
+                        </select>
+                    </div>
+                    <div class="col-md-5">
+                    </div>
+                    <div class="col-md-6 ">
+                        <div class="float-right">
+                            <nav aria-label="Page navigation ">
+                                <ul class="pagination pagination-sm">
+                                    <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-left"></i></a></li>
+                                    <li ng-repeat="n in range(Count, filter.PageSize)"
+                                        class="{{ n+1 == filter.PageIndex ? 'active' :''}} page-item"
+                                        ng-click="setPage()">
+                                        <a class="page-link" ng-bind="n+1">1</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-right"></i></a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style type="text/css">
+        .table-responsive .dropdown-menu {
+            position: absolute !important;
+            top: 0% !important;       
+            left: 100% !important; }
+    </style>
+    <div class="card">
+        <div class="card-body " style="display:block;overflow-x: auto">
+            <div class="row" id="MainTable"  >
+                <div ng-repeat="m in MainList" class="card  col-md-3 {{action_success[m.Id]}}"
+                     ng-style="{{styles[m.Id]}}"
+                     row-index="{{$index}}">
+                    <div class="card-body bg-info text-white">
+                        <div>
+                            <div class="btn-group">
+                                <i ng-click="toggleDrop($index);" type="button" class="fas fa-edit"></i>
+                                <ul class="dropdown-menu {{drop_toggle_class[$index]}}" role="menu">
+                                    <li><a class="dropdown-item" ng-show="config.inlineEdit" ng-click="Edit(m)"> Update </a></li>
+                                    <li><a class="dropdown-item" ng-show="config.popupEdit" ng-click="openPopup(m)"> Edit</a></li>
+                                    <li><a class="dropdown-item" ng-show="config.onscreenEdit" ng-click="showAdvanced($event,m)">Quick Edit</a></li>
+                                    <li><a ng-repeat="a in config.actionlist" class="dropdown-item" ng-click="defaultService.OpenLink(setUrl(a.url,m))">{{a.Text}}</a></li>
+                                    <li><a ng-show="config.enable_order && (!row_insert_process)" ng-click="cutRow($index);" class="dropdown-item">Cut</a></li>
+                                    <li><a ng-show="config.enable_order && (row_insert_process)" ng-click="pasteRowAfter($index);" class="dropdown-item"> Insert After</a></li>
+                                </ul>
+                            </div>
+                            <div class="btn-group float-left" style="display:none;">
+                                <button class="badge btn btn-sm btn-primary" ng-show="config.inlineEdit" ng-click="Edit(m)"> Update </button>
+                                <button class="badge btn btn-sm btn-primary" ng-show="config.popupEdit" ng-click="openPopup(m)">Edit</button>
+                                <button class="badge btn btn-sm btn-primary" ng-show="config.onscreenEdit" ng-click="showAdvanced($event,m)">Edit</button>
+                                <!-- <button class="badge btn btn-sm btn-primary" ng-click="defaultService.OpenLink(setUrl(a.url,m))" ng-repeat="a in config.actionlist">{a.Text}}</button>-->
+                            </div>
+                        </div>
+                        <div>
+                            {{m.Id}}
+                        </div>
+                        <div ng-if="config.activable">
+                            <input type="checkbox" class="form-check-input" ng-model="m.Inactive" ng-click="Activation(m)" />
+                        </div>
+                        <div compile ng-bind-html="f.view" ng-repeat="f in config.tdList"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="context1" class="dropdown-menu" role='menu' ng-show="{{config.actionlist.length!=0 || config.enable_order}}">
+        <a ng-repeat="a in config.actionlist" class="dropdown-item" ng-click="defaultService.OpenLink(setUrl(a.url,MainList[SelectedIndex]))">{{a.Text}}</a>
+        <button ng-show="config.enable_order && (!row_insert_process)" ng-click="cutRow();" class="dropdown-item">Cut</button>
+        <button ng-show="config.enable_order && (row_insert_process)" ng-click="pasteRowAfter();" class="dropdown-item"> Insert After</button>
+    </div>
+</div>

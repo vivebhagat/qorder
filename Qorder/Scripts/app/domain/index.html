@@ -1,0 +1,255 @@
+﻿<div style="z-index:100;position:fixed;top:10px;left:0px;display:block;width:100%;height:100%;" class="modal fade show" ng-if="show_panel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <edit-panel ng-if="show_panel" showflag="show_panel" iconfig="config" modelid="imodel"></edit-panel>
+        </div>
+    </div>
+</div>
+<div aria-label="breadcrumb" ng-show="config.enable_history">
+    <ol class="breadcrumb card-body">
+        <li ng-repeat="link in historyLinks"
+            class="active breadcrumb-item" ng-click="defaultService.OpenLink(link.url,true)">
+            <a href="#">{{link.text}} </a>
+        </li>
+    </ol>
+    <hr />
+</div>
+<div class="card" ng-show="config.showParent">
+    <div class="card-header">
+        <h5 class="card-title mb-0">Parent Details </h5>
+    </div>
+    <div class="card-body">
+        <div class="row" id="parentfieldRow">
+            <div ng-repeat="f in config.parentFieldList" class="col-md-{{12/config.cols}} col-{{12/config.cols}}">
+                <div compile ng-bind-html="f.view" style="padding-right:50px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header">
+        <div class="row ">
+            <div class="col-md-6">
+                <h3>List: {{config.EntityName}}</h3>
+            </div>
+            <div class="col-md-6">
+                <div class="float-right">
+                    <button ng-click="showAdvanced($event)" ng-show="config.onscreenAdd" class="btn btn-primary">Add</button>
+                    <button ng-click="defaultService.OpenLink(config.addbutton.url)" ng-show="config.onPageAdd" class="btn btn-primary">Add</button>
+                    <button ng-click="defaultService.OpenLink(config.backbutton.url)" ng-show="config.backbutton.show" class="btn btn-primary">Back</button>
+                    <button ng-repeat="btn in config.btnList" ng-click="defaultService.OpenLink(btn.url)" class="btn btn-primary">{{btn.Text}}</button>
+                    <button ng-repeat="btn in config.btnActionList" ng-click="PerformAction(btn.action)" class="btn btn-primary">{{btn.Text}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card" ng-show="config.use_filter">
+        <div class="card-body mb-3 bg-light cursor-grab border">
+            <div class="row ">
+                <div class="col-md-2">
+                    <div class="input-group mb-2 me-sm-2">
+                        <select ng-model="FilterId" ng-change="GetFilter(FilterId)" class="form-control">
+                            <option>None</option>
+                            <option ng-repeat="o in FilterList" ng-value="o.Id">{{ o.Name }}</option>
+                        </select>
+                        <button ng-click="FilterAll()" class="btn btn-secondary  float-right"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-filter align-middle me-2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg> Filter</button>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row " id="FilterPanel">
+                <div class="col-md-3" ng-repeat="f in config.filterFieldList"><div compile ng-bind-html="f.view"></div></div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-1">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <select ng-model="filter.PageSize" ng-change="ChangePageSize()" class="form-control form-control-sm">
+                                <option ng-repeat="o in PageSizeList" ng-value="o">{{ o }} Records </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                </div>
+                <div class="col-md-6 ">
+                    <div class="float-right">
+                        <nav aria-label="Page navigation ">
+                            <ul class="pagination pagination-sm">
+                                <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-left"></i></a></li>
+                                <li ng-repeat="n in range(Count, filter.PageSize)"
+                                    class="{{ n+1 == filter.PageIndex ? 'active' :''}} page-item"
+                                    ng-click="setPage()">
+                                    <a class="page-link" ng-bind="n+1">1</a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-right"></i></a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-info alert-dismissible" ng-show="DefaultMessage.SuccessMessage!=''">{{DefaultMessage.SuccessMessage}}</div>
+                <div class="alert alert-danger alert-dismissible" ng-show="DefaultMessage.ErrorMessage!=''">{{DefaultMessage.ErrorMessage}}</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body" style="display:block;overflow-x: auto">
+        <table class="table table-striped table-responsive table-bordered no-footer" id="MainTable" role="grid" style="display:table;">
+            <thead style="width:auto;">
+                <tr>
+                    <th><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></th>
+                    <th>
+                        #
+                    </th>
+                    <th ng-if="config.activable" style="white-space: nowrap;text-transform: uppercase;">
+                        Inactive
+                    </th>
+                    <th style="white-space: nowrap;text-transform: uppercase;">
+                        Domain
+                    </th>
+
+                    <th style="white-space: nowrap;text-transform: uppercase;">
+                        default User
+                    </th>
+                    <th style="white-space: nowrap;text-transform: uppercase;">
+                        default Password
+                    </th>
+                    <th style="white-space: nowrap;text-transform: uppercase;">
+                        default Role
+                    </th>
+                    <th style="white-space: nowrap;text-transform: uppercase;">
+                        subdomain
+                    </th>
+                    <th style="white-space: nowrap;text-transform: uppercase;">
+                        domainkey
+                    </th>
+                    <th style="white-space: nowrap;text-transform: uppercase;">
+                        Maintenance Start
+                    </th>
+                    <th style="white-space: nowrap;text-transform: uppercase;">
+                        Maintenance End
+                    </th>
+                    <th style="white-space: nowrap;text-transform: uppercase;">
+                        Connection String
+                    </th>
+                    <th style="white-space: nowrap;text-transform: uppercase;">
+                        Auth Connection String
+                    </th>
+                    <th compile ng-bind-html="f.view" ng-repeat="f in config.thList" style="white-space: nowrap;text-transform: uppercase;"></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="m in MainList" class="{{action_success[m.Id]}}" ng-mousedown="selectRow(m.Id)"
+                    ng-style="{{styles[m.Id]}}" ng-right-click="ShowContextMenu($index)" ng-dblclick="ShowContextMenu($index)" context="context1"
+                    row-index="{{$index}}">
+                    <td>
+                        <div class="btn-group float-left">
+                            <button class="badge btn btn-sm btn-primary" ng-show="config.inlineEdit" ng-click="Edit(m)"> Update </button>
+                            <button class="badge btn btn-sm btn-primary" ng-show="config.popupEdit" ng-click="openPopup(m)">Edit</button>
+                            <button class="badge btn btn-sm btn-primary" ng-show="config.onscreenEdit" ng-click="showAdvanced($event,m)">Edit</button>
+                            <!-- <button class="badge btn btn-sm btn-primary" ng-click="defaultService.OpenLink(setUrl(a.url,m))" ng-repeat="a in config.actionlist">{a.Text}}</button>-->
+                        </div>
+
+                    </td>
+                    <td>
+                        {{m.Id}}
+                    </td>
+                    <td ng-if="config.activable">
+                        <input type="checkbox" class="form-check-input" ng-model="m.Inactive" ng-click="Activation(m)" />
+                    </td>
+                    <td>
+                        <input ng-model="m.Domain" class="form-control" />
+                    </td>
+                    <td>
+                        <input ng-model="m.default_username" class="form-control" />
+                    </td>
+                    <td>
+                        <input ng-model="m.default_password" class="form-control" />
+                    </td>
+                    <td>
+                        <input ng-model="m.default_role" class="form-control" />
+                    </td>
+                    <td>
+                        <input ng-model="m.subdomain" class="form-control" />
+                    </td>
+                    <td>
+                        <input ng-model="m.domainkey" class="form-control" />
+                    </td>
+                    <td>
+                        <input ng-model="m.MaintenanceStartDate" class="form-control" />
+                    </td>
+                    <td>
+                        <input ng-model="m.MaintenanceEndDate" class="form-control" />
+                    </td>                    
+                    <td>
+                        <input ng-model="m.ConnectionString" class="form-control" />
+                    </td>
+                    <td>
+                        <input ng-model="m.AuthConnectionString" class="form-control" />
+                    </td>
+                    <td compile ng-bind-html="f.view" ng-repeat="f in config.tdList"></td>
+
+                </tr>
+                <tr>
+                    <td>
+                        <div class="btn-group float-left">
+                            <button class="badge btn btn-sm btn-primary" ng-show="config.inlineEdit" ng-click="Add(new)"> Add </button>
+                        </div>
+                    </td>
+                    <td>
+                        {{new.Id}}
+                    </td>
+                    <td ng-if="config.activable">
+                        <input type="checkbox" class="form-check-input" ng-model="m.Inactive" ng-click="Activation(m)" />
+                    </td>
+                    <td>
+                        <input ng-model="new.Domain" class="form-control" />
+                    </td>
+                    <td>
+                        <input ng-model="new.default_username" class="form-control" />
+                    </td>
+                    <td>
+                        <input ng-model="new.default_password" class="form-control" />
+                    </td>
+                    <td>
+                        <input ng-model="new.default_role" class="form-control" />
+                    </td>
+                    <td>
+                        <input ng-model="new.subdomain" class="form-control" />
+                    </td>
+                    <td>
+                        <input ng-model="new.domainkey" class="form-control" />
+                    </td>
+                    <td>
+                        <input ng-model="new.MaintenanceStartDate" class="form-control" />
+                    </td>
+                    <td>
+                        <input ng-model="new.MaintenanceEndDate" class="form-control" />
+                    </td>
+                    <td>
+                        <input ng-model="new.ConnectionString" class="form-control" />
+                    </td>
+                    <td>
+                        <input ng-model="new.AuthConnectionString" class="form-control" />
+                    </td>
+                    <td compile ng-bind-html="f.view" ng-repeat="f in config.tdList"></td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div id="context1" class="dropdown-menu" role='menu' ng-show="{{config.actionlist.length!=0 || config.enable_order}}">
+    <a ng-repeat="a in config.actionlist" class="dropdown-item" ng-click="defaultService.OpenLink(setUrl(a.url,MainList[SelectedIndex]))">{{a.Text}}</a>
+    <button ng-show="config.enable_order && (!row_insert_process)" ng-click="cutRow();" class="dropdown-item">Cut</button>
+    <button ng-show="config.enable_order && (row_insert_process)" ng-click="pasteRowAfter();" class="dropdown-item"> Insert After</button>
+</div>

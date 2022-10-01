@@ -1,0 +1,51 @@
+﻿<div class="x_panel">
+    <div class="row x_title">
+        <div class="col-md-12">
+            <h2> {{config.EntityName}} </h2>
+        </div>
+    </div>
+    <div class="x_panel" ng-show="config.onscreenAdd">
+        <div class="row">
+                <div>
+                    <div compile ng-bind-html="f.view" ng-repeat="f in config.fieldList" ></div>
+                </div>              
+                <div class="col-md-4">
+                    <button class="btn btn-default pull-right" type="button" ng-click="Add(model)">Add</button>
+                </div>
+            </div>
+        </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-info alert-dismissible" ng-show="DefaultMessage.SuccessMessage!=''">{{DefaultMessage.SuccessMessage}}</div>
+            <div class="alert alert-danger alert-dismissible" ng-show="DefaultMessage.ErrorMessage!=''">{{DefaultMessage.ErrorMessage}}</div>
+        </div>
+    </div>
+    <div class="x_content">
+
+        <table class="table table-striped dataTable no-footer" id="MainTable" role="grid">
+            <thead>
+                <tr style="text-align:center">
+                    <th>
+                        <label> Id </label>
+                    </th> 
+                    <th compile ng-bind-html="f.view" ng-repeat="f in config.thList" style="white-space: nowrap;"></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="m in MainList">
+                    <td>
+                        {{m.Id}}
+                    </td>                
+                    <td compile ng-bind-html="f.view" ng-repeat="f in config.tdList"></td>
+                    <td>
+                        <div class="btn-group pull-right">
+                            <button class="btn btn-default" ng-show="config.inlineEdit" ng-click="Edit(m)"> Update </button>
+                            <button class="btn btn-default" ng-click="defaultService.OpenLink(setUrl(a.url,m))" ng-repeat="a in config.actionlist">{{a.Text}}</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
